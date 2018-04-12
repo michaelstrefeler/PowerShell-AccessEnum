@@ -1,4 +1,8 @@
-This is a PowerShell script used to compare folder's permissions with it's subfolders' permissions.
+# AccesEnum PowerShell
+
+> A PowerShell script used to compare folder's permissions with it's subfolders' permissions.
+
+## Usage
 
 To run the script open the CMD to the folder that the script is in and type:
 start powershell -command "& '.\PowerShell AccessEnum 2.0.ps1' -path <Your Path Here> -depth <Number of subfolders you want to go through>
