@@ -37,15 +37,6 @@ while(-not $path -or $path -notmatch '^(?![\s]).*' -or $path -match '\w:\\$' -or
     }
 }
 
-
-<#$theQuestion = $( Read-Host "Do you want to go through all of the subfolders? Y/N ")
-
-while($theQuestion -ine "Y" -and $theQuestion -ine "N"){
-    $theQuestion = $( Read-Host "Please answer Y for Yes or N for No")
-}
-
-#>
-
 $newPath = $path
 $userPath = $newPath
 
@@ -196,9 +187,4 @@ if($depth){
     }
 }
 
-
-
 Read-Host -Prompt "`n`nPress Enter to exit" 
-
-# C:\Users\mstrefel\test <-- Different persmissions
-# \\?\UNC\enac1files.epfl.ch\ENAC-IT\common\testLongpath <-- Long path
