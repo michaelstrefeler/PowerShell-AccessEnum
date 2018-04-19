@@ -105,8 +105,6 @@ function checkForDifferences($userPath){
         $global:outputArray += [PSCustomObject]@{"Path" = "$userPath"; "Read" = ""; "Write" = ""; "Modify" =""; "FullControl" = ""}
         foreach($user in $addedUsers){
             $i = [array]::indexof($cUsers,$user)
-            $cFSR[$i]
-            
             if($cFSR[$i] -like '*Read*'){
                 if($global:outputArray[$x].Read -eq ""){
                     $global:outputArray[$x].Read += $user
