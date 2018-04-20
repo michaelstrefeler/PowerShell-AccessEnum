@@ -55,6 +55,7 @@ function checkForDifferences($userPath){
     $parentFolder = Get-Acl $parentPath 
     
     # Arrays for storing info about current folder ACL
+    
     $cUsers = @()
     $cFSR = @()
     $cInherited = @()
@@ -103,46 +104,103 @@ function checkForDifferences($userPath){
        # Do Nothing
     }else{
         $global:outputArray += [PSCustomObject]@{"Path" = "$userPath"; "Read" = ""; "Write" = ""; "Modify" =""; "FullControl" = ""}
-        foreach($user in $addedUsers){
-            $i = [array]::indexof($cUsers,$user)
-            if($cFSR[$i] -like '*Read*'){
+        foreach($pUser in $pUsers){
+            $i = [array]::indexof($pUsers,$pUser)
+         
+            if($pFSR[$i] -like '*Read*'){
                 if($global:outputArray[$x].Read -eq ""){
-                    $global:outputArray[$x].Read += $user
+                    $global:outputArray[$x].Read += $pUser
                 }else{
-                    $global:outputArray[$x].Read += ","+$user
+                    if($global:outputArray[$x].Read -like "*$pUser*"){
+                    }else{
+                        $global:outputArray[$x].Read += ", "+$pUser
+                    }
+                }
+            }
+
+            if($pFSR[$i] -like '*Write*'){
+                if($global:outputArray[$x].Write -eq ""){
+                    $global:outputArray[$x].Write += $pUser
+                }else{
+                    if($global:outputArray[$x].Write -like "*$pUser*"){
+                    }else{
+                        $global:outputArray[$x].Write += ", "+$pUser
+                    }
+                }
+            }
+
+            if($pFSR[$i] -like '*Modify*'){
+                $y = [array]::indexof($global:outputArray, $userPath)
+                if($global:outputArray[$y].Modify -eq ""){
+                    $global:outputArray[$y].Modify += $pUser
+                }else{
+                     if($global:outputArray[$x].Modify -like "*$pUser*"){
+                    }else{
+                        $global:outputArray[$x].Modify += ", "+$pUser
+                    }
+                }
+            }
+
+            if($pFSR[$i] -like '*FullControl*'){
+                if($global:outputArray[$x].FullControl -eq ""){
+                    $global:outputArray[$x].FullControl += $pUser
+                }else{
+                    if($global:outputArray[$x].FullControl -like "*$pUser*"){
+                    }else{
+                        $global:outputArray[$x].FullControl += ", "+$pUser
+                    }
+                }
+            }
+
+        }
+
+        foreach($user in $cUsers){
+            $i = [array]::indexof($cUsers,$user)
+         
+            if($cFSR[$i] -like '*Read*'){
+                $a = [array]::indexof($global:outputArray, $userPath)
+                if($global:outputArray[$a].Read -eq ""){
+                    $global:outputArray[$a].Read += $user
+                }else{
+                    $global:outputArray[$a].Read += ", "+$user
                 }
             }
 
             if($cFSR[$i] -like '*Write*'){
-                if($global:outputArray[$x].Write -eq ""){
-                    $global:outputArray[$x].Write += $user
+                $b = [array]::indexof($global:outputArray, $userPath)
+                if($global:outputArray[$b].Write -eq ""){
+                    $global:outputArray[$b].Write += $user
                 }else{
-                    $global:outputArray[$x].Write += ","+$user
+                    $global:outputArray[$b].Write += ", "+$user
                 }
             }
 
             if($cFSR[$i] -like '*Modify*'){
-                $y = [array]::indexof($global:outputArray, $userPath)
-                if($global:outputArray[$y].Modify -eq ""){
-                    $global:outputArray[$y].Modify += $user
+                $c = [array]::indexof($global:outputArray, $userPath)
+                if($global:outputArray[$c].Modify -eq ""){
+                    $global:outputArray[$c].Modify += $user
                 }else{
-                    $global:outputArray[$y].Modify += ","+$user
+                    $global:outputArray[$c].Modify += ", "+$user
                 }
             }
 
             if($cFSR[$i] -like '*FullControl*'){
-                if($global:outputArray[$x].FullControl -eq ""){
-                    $global:outputArray[$x].FullControl += $user
+                $d = [array]::indexof($global:outputArray, $userPath)
+                if($global:outputArray[$d].FullControl -eq ""){
+                    $global:outputArray[$d].FullControl += $user
                 }else{
-                    $global:outputArray[$x].FullControl += ","+$user
+                    if($global:outputArray[$d].FullControl -like "*$user*"){
+                    }else{
+                        $global:outputArray[$d].FullControl += ", "+$user
+                    }
                 }
             }
 
         }
     }
+
+
     $x += 1
-    $cFSR = $null
-    $addedUsers = $null
     $newPath = $currentFolder
 }
 
@@ -186,7 +244,6 @@ foreach($right in $arrayParamRights){
 
 if($depth){
     # Calling function to list differnces between parent folder and child folder
-    # checkForDifferences($newPath)
 
     $childFolders = ls $userPath -Directory -Name -Depth ($depth-1)
     
