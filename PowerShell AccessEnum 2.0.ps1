@@ -1,13 +1,20 @@
 ﻿  <#
     .SYNOPSIS
-      PowerShell script to compare folder permissions
+        PowerShell script to compare folder permissions
+    
     .DESCRIPTION
-      This script is used to compare file permissions between a parent folder and it's subfolders. The script lists added users, missing users and different user permissions.
+        This script is used to compare file permissions between a parent folder and it's subfolders. The script lists added users, missing users and different user permissions.
+    
+    .NOTES
+        Version:        1.0
+        Author:         Michael Strefeler
+        Creation Date:  May 1st 2018
+
     .EXAMPLE
-       '.\PowerShell AccessEnum 2.0.ps1' -path \\enac1files.epfl.ch\ENAC-IT\IT2 -depth 5
-       This command will compare the permissions of all subfolders 5 levels into the path (\\enac1files.epfl.ch\ENAC-IT\IT2\1\2\3\4\5)
+       '.\PowerShell AccessEnum 2.0.ps1' -path \\server\unit\projects -depth 5
+       This command will compare the permissions of all subfolders 5 levels into the path (\\server\unit\projects\1\2\3\4\5)
     .EXAMPLE
-       '.\PowerShell AccessEnum 2.0.ps1' -path \\?\UNC\enac1files.epfl.ch\ENAC-IT\common\testLongpath
+       '.\PowerShell AccessEnum 2.0.ps1' -path \\?\UNC\server\unit\common\Longpath
        For long paths you need to write \\?UNC\ before the path. -depth is an optional parameter. If it is not provided the script will go though all of the subfolders in the path
   #>
 
@@ -43,7 +50,7 @@ $userPath = $newPath
 $global:outputArray = @()
 
 <#
-    Function used to check is permissions are the same between a parent folder and a child folder
+    Function used to check if permissions are the same between a parent folder and a child folder
     $userPath is used to dynamically go through subfolders
 #>
 
