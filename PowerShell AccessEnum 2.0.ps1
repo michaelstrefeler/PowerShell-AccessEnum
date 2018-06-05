@@ -8,7 +8,7 @@
     .NOTES
         Version:        1.0
         Author:         Michael Strefeler
-        Creation Date:  May 1st 2018
+        Creation Date:  April 12th 2018
 
     .EXAMPLE
        '.\PowerShell AccessEnum 2.0.ps1' -path \\server\unit\projects -depth 5
