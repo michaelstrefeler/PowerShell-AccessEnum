@@ -11,9 +11,9 @@ start powershell -command "& '.\PowerShell AccessEnum 2.0.ps1' -path <Your Path 
 
 For example
 ```
-start powershell -command "& '.\PowerShell AccessEnum 2.0.ps1' -path \\enac1files.epfl.ch\ENAC-IT\IT2 -depth 5
+start powershell -command "& '.\PowerShell AccessEnum 2.0.ps1' -path \\server\unit\projects -depth 5
 ```
-Will compare the permissions of all subfolders 5 levels into the path (\\enac1files.epfl.ch\ENAC-IT\IT2\1\2\3\4\5)
+Will compare the permissions of all subfolders 5 levels into the path (\\server\unit\projects\1\2\3\4\5)
 
 The depth parameter can be removed if you want to go through all of the subfolders
 

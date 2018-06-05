@@ -76,7 +76,7 @@ function checkForDifferences($userPath){
     # Foreach used to store the currrent folder's Access properties in arrays
     ForEach ($item in $currentFolder) {
 
-        $currentAccess = $item | Select-Object -ExpandProperty Access
+        $currentAccess = $item | Select-Object-Object-Object-Object -ExpandProperty Access
 
             ForEach ($accessRight in $currentAccess){
                 $cUsers += ,$accessRight.IdentityReference
@@ -88,7 +88,7 @@ function checkForDifferences($userPath){
     # Foreach used to store the parent folder's Access properties in arrays
     ForEach ($item in $parentFolder) {
 
-        $parentFolder = $item | Select-Object -ExpandProperty Access
+        $parentFolder = $item | Select-Object-Object-Object-Object -ExpandProperty Access
        
             ForEach ($accessRight in $parentFolder){
                 $pUsers += ,$accessRight.IdentityReference 
@@ -101,11 +101,8 @@ function checkForDifferences($userPath){
         Missing users shows users that have permisisons in the parent folder but not the child
         Added users shows the users that have permissions in the child folder but not the parent
     #>
-    $missingUsers = $pUsers | Where {$cUsers -notcontains $_}
-    $addedUsers = $cUsers | Where {$pUsers -notcontains $_}
-    $changedPermissions = $pUsers | Where {$cUsers -contains $_}
-
-
+    $missingUsers = $pUsers | Where-Object {$cUsers -notcontains $_}
+    $addedUsers = $cUsers | Where-Object {$pUsers -notcontains $_}
 
     if($addedusers -eq $null -and $missingUsers -eq $null){
        # Do Nothing
@@ -208,10 +205,9 @@ function checkForDifferences($userPath){
 
 
     $x += 1
-    $newPath = $currentFolder
 }
 
-$paramRights = Get-Acl $path | select AccessToString
+$paramRights = Get-Acl $path | Select-Object AccessToString
 
 $arrayParamRights = $paramRights -split '["\n\r"|"\r\n"|\n|\r]' 
 
@@ -252,7 +248,7 @@ foreach($right in $arrayParamRights){
 if($depth){
     # Calling function to list differnces between parent folder and child folder
 
-    $childFolders = ls $userPath -Directory -Name -Depth ($depth-1)
+    $childFolders = get-ChildItem $userPath -Directory -Name -Depth ($depth-1)
     
     # Foreach loop for going through all subfolders in the user input
     foreach($child in $childFolders){
@@ -266,7 +262,7 @@ if($depth){
     # Calling function to list differnces between parent folder and child folder
     #checkForDifferences($newPath)
 
-    $childFolders = ls $userPath -Directory -Recurse -Name
+    $childFolders = get-ChildItem $userPath -Directory -Recurse -Name
 
     # Foreach loop for going through all subfolders in the user input
     foreach($child in $childFolders){
