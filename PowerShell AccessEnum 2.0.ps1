@@ -6,7 +6,7 @@
         This script is used to compare file permissions between a parent folder and it's subfolders. The script lists added users, missing users and different user permissions.
     
     .NOTES
-        Version:        1.0
+        Version:        2.0
         Author:         Michael Strefeler
         Creation Date:  April 12th 2018
 
