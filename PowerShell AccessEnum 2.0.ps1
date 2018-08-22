@@ -76,7 +76,7 @@ function checkForDifferences($userPath){
     # Foreach used to store the currrent folder's Access properties in arrays
     ForEach ($item in $currentFolder) {
 
-        $currentAccess = $item | Select-Object-Object-Object-Object -ExpandProperty Access
+        $currentAccess = $item | Select-Object -ExpandProperty Access
 
             ForEach ($accessRight in $currentAccess){
                 $cUsers += ,$accessRight.IdentityReference
@@ -88,7 +88,7 @@ function checkForDifferences($userPath){
     # Foreach used to store the parent folder's Access properties in arrays
     ForEach ($item in $parentFolder) {
 
-        $parentFolder = $item | Select-Object-Object-Object-Object -ExpandProperty Access
+        $parentFolder = $item | Select-Object -ExpandProperty Access
        
             ForEach ($accessRight in $parentFolder){
                 $pUsers += ,$accessRight.IdentityReference 
@@ -104,7 +104,7 @@ function checkForDifferences($userPath){
     $missingUsers = $pUsers | Where-Object {$cUsers -notcontains $_}
     $addedUsers = $cUsers | Where-Object {$pUsers -notcontains $_}
 
-    if($addedusers -eq $null -and $missingUsers -eq $null){
+    if($addedUsers -eq $null -and $missingUsers -eq $null){
        # Do Nothing
     }else{
         $global:outputArray += [PSCustomObject]@{"Path" = "$userPath"; "Read" = ""; "Write" = ""; "Modify" =""; "FullControl" = ""}
